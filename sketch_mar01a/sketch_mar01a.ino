@@ -7,13 +7,13 @@
 #define PROFESSOR 1
 
 /*  TODO:
- *  Importar bibliotecas (RTC/Biometrico/Cartao) 
+ *  Importar bibliotecas (RTC/Biometrico/Cartao)
  *  Implementar digitalLida()/iniciarDia()/encerrarDia()/gravarPresenca()/horario()
  *  Implementar entrada e comparação de datas para quando o professor inserir a digital duas vezes no mesmo dia
  *  digitalLida()
  *      pegar no pc da FEM
  *  iniciarDia()
- *      
+ *
 */
 
 
@@ -27,7 +27,6 @@ String dataHj = "inicio";
 
 void setup() {
   int leitura;
-  
   do{
     leitura = digitalLida();
   }while(leitura != PROFESSOR);
@@ -44,7 +43,6 @@ void loop() {
   }
 
 }
-
 int digitalLida(){
   return 1;
 }
