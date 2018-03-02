@@ -16,11 +16,6 @@
 
 
  /*  TODO:
-  *  Implementar digitalLida()/iniciarDia()/encerrarDia()/gravarPresenca()/horario()
-  *  Implementar saidas de texto por LCD = report()
-  *  Implementar entrada e comparação de datas para quando o professor inserir a digital duas vezes no mesmo dia
-  *  digitalLida()
-  *      pegar no pc da FEM
   *
  */
 
@@ -34,13 +29,12 @@
 
 //Global Var
 String dataHj;
-DS1307 rtc(A4, A5);
 LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
 SdFat sdCard;
 SdFile meuArquivo;
 const int chipSelect = 4;
-SoftwareSerial mySerial(2, 3);
-Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
+
+/****************************************************************************/
 
 void setup() {
   int leitura;
@@ -63,7 +57,7 @@ void loop() {
 
 //Funções auxiliares
 int digitalLida(){
-  return 1;
+  return Serial.parseInt();
 }
 
 void gravarPresenca(int leitura, String data){
@@ -74,7 +68,7 @@ void gravarPresenca(int leitura, String data){
 }
 
 void iniciarDia(){
-  dataHj = rtc.getDateStr(FORMAT_SHORT);
+  dataHj = analogRead(A0));
 }
 
 void encerrarDia(){
@@ -93,11 +87,6 @@ void inicializarPerifericos(){
 
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
-
-  //Starts rtc
-  rtc.halt(false);
-  rtc.setSQWRate(SQW_RATE_1);
-  rtc.enableSQW(true);
  
  //Starts SD card
  if(!sdCard.begin(chipSelect,SPI_HALF_SPEED))sdCard.initErrorHalt();
@@ -108,13 +97,6 @@ void inicializarPerifericos(){
     asm volatile ("  jmp 0");
   }
   
-  //Starts FigerPrint Reader
-  finger.begin(57600);
-  if (finger.verifyPassword()) {
-    Serial.println("Leitor Biometrico Encontrado");
-  } else {
-    Serial.println("Leitor Biometrico nao encontrada");
-    while (1);
-  }
-  Serial.println("Esperando Dedo para Verificar");
+  Serial.begin(9600);
+  
 }
