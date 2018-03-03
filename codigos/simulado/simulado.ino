@@ -18,34 +18,27 @@
  /*  TODO:
   *
  */
-
-
-#include <DS1307.h>               //RTC-lib
-#include <LiquidCrystal.h>        //LCD-lib
-#include <SdFat.h>                //SDCard-lib
-
-#define PROFESSOR 1                         //RA do professor
-#define NOME_DO_ARQUIVO presencaBruta.txt   //Nome do arquivo em que os dados serao salvo
+#define PROFESSOR "165215"                         //RA do professor
 
 //Global Var
 String dataHj;
-LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
-SdFat sdCard;
-SdFile meuArquivo;
-const int chipSelect = 4;
 
 /****************************************************************************/
 
 void setup() {
-  int leitura;
+  String leitura;
+  inicializarPerifericos();
   do{
     leitura = digitalLida();
+    if(leitura != PROFESSOR)
+      report("Esperando professor");
+    delay(100);
   }while(leitura != PROFESSOR);
   iniciarDia();
 }
 
 void loop() {
-  int leitura = digitalLida();
+  String leitura = digitalLida();
   if(leitura == PROFESSOR){
     encerrarDia();
   }
@@ -56,47 +49,43 @@ void loop() {
 }
 
 //Funções auxiliares
-int digitalLida(){
-  return Serial.parseInt();
+String digitalLida(){
+  String RA= "000000";
+  while(Serial.available() <= 0){
+    delay(100);
+  }
+  int caracteres = Serial.available();
+  for(int i=0;i<caracteres;i++){
+    RA[i] = Serial.read();
+  }
+  return RA;
 }
 
-void gravarPresenca(int leitura, String data){
+void gravarPresenca(String leitura, String data){
   //Insere o RA e a data da presenca no arquivo aberto
-  meuArquivo.print(leitura);
-  meuArquivo.print(" ");
-  meuArquivo.println("data");
+  Serial.print("Mensagem gravada no cartao: ");
+  Serial.print(leitura);
+  Serial.print(" ");
+  Serial.println(data);
 }
 
 void iniciarDia(){
-  dataHj = analogRead(A0));
+  dataHj = "hoje eh 03";
+  report("Inicio do programa");
 }
 
 void encerrarDia(){
-  meuArquivo.close();
+  report("Fim do dia");
+  delay(1000);
   asm volatile ("  jmp 0");
 }
 
 void report(String message){
-  // Print a message to the LCD.
-  lcd.print(message);
+  Serial.println(message);
 }
 
 void inicializarPerifericos(){
-  //Zerar data de inicio
   String dataHj = "inicio";
-
-  // set up the LCD's number of columns and rows:
-  lcd.begin(16, 2);
- 
- //Starts SD card
- if(!sdCard.begin(chipSelect,SPI_HALF_SPEED))sdCard.initErrorHalt();
-  // Abre o arquivo LER_POT.TXT
-  if (!meuArquivo.open("NOME_DO_ARQUIVO", O_RDWR | O_CREAT | O_AT_END))
-  {
-    sdCard.errorHalt("Erro na abertura do arquivo de presenca bruta");
-    asm volatile ("  jmp 0");
-  }
-  
   Serial.begin(9600);
   
 }
