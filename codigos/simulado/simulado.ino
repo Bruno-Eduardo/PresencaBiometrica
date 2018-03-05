@@ -16,6 +16,12 @@
 
 
  /*  TODO:
+  *    Implementar struct{int ID,StringRA}
+  *    Criar vetor de RAs arbitrarios
+  *    Criar funcao de um professor para posterior evolucao (mais de um professor)
+  *    Criar uma nova enroll q salve num txt a lista de IDs e RAs
+  *    Criar funcao q importe os IDs e RAs dum txt
+  *     
  */
 #define PROFESSOR "165215"                         //RA do professor
 
