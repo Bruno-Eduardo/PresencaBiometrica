@@ -16,13 +16,14 @@
 
 
  /*  TODO:
-  *  resolver problema de iteração num vetor de String
+  *  Implementar quebra de linha do LCD
  */
 #define PROFESSOR "165215"                         //RA do professor
 
 //Global Var
 String dataHj;
 String listaDePresenca[100];
+String ultimoCadastrado;
 int AlunosRegistrados;
 /****************************************************************************/
 
@@ -44,7 +45,9 @@ void loop() {
     encerrarDia();
   }
   else{
-   gravarPresenca(leitura, dataHj);
+   bool ok = gravarPresenca(leitura, dataHj);
+   if(ok)
+     report("Aluno " + leitura + " presente!");
   }
 
 }
@@ -55,26 +58,23 @@ String digitalLida(){
   while(Serial.available() <= 0){
     delay(100);
   }
-  int caracteres = Serial.available();
-  if(caracteres > 6)
-    caracteres = 6;
-  for(int i=0;i<caracteres;i++){
+  for(int i=0;i<6;i++){
     RA[i] = Serial.read();
+    delay(10);
   }
   while(Serial.available() > 0){
     char flush = Serial.read();
+    delay(10);
   }
-
-  Serial.print("Acabei de ler ");
-  Serial.println(RA);
   
   return RA;
 }
 
-void gravarPresenca(String leitura, String data){
+bool gravarPresenca(String leitura, String data){
   //Insere o RA e a data da presenca no arquivo aberto
   if(jaCadastrado(leitura)){
     report("Presenca ja cadastrada");
+    return false;
   }
   else{
     Serial.print("Mensagem gravada no cartao: ");
@@ -83,6 +83,7 @@ void gravarPresenca(String leitura, String data){
     Serial.println(data);
     listaDePresenca[AlunosRegistrados] = leitura;
     AlunosRegistrados++;
+    return true;
   }
 }
 
@@ -108,23 +109,8 @@ void inicializarPerifericos(){
 }
 
 bool jaCadastrado(String aluno){
-  report("Impressao da lista de presenca----------");
-  for(int i=0; i<AlunosRegistrados; i++){
-    Serial.println(listaDePresenca[i]);
-  }
-
-  Serial.print("O aluno agora eh ");
-  Serial.println(aluno);
-  
-  for(int i=0; i<AlunosRegistrados; i++){
-    if(listaDePresenca[i][4] == aluno[4]);
-      Serial.print(listaDePresenca[i][4]);
-      Serial.print("O aluno lido ");
-      Serial.print(aluno);
-      Serial.print(" é igual o da lista");
-      Serial.print(listaDePresenca[i]);
-      report(aluno);
-      return true;
-  }
+  if(ultimoCadastrado == aluno)
+    return true;
+  ultimoCadastrado = aluno;
   return false;
 }
