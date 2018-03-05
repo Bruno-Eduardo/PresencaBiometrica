@@ -58,7 +58,7 @@ String digitalLida(){
   while(Serial.available() <= 0){
     delay(100);
   }
-  for(int i=0;i<6;i++){
+  for(int i=0;i<6;i++){ //---------------------------------------FLAG LEITORBIOMETRICO-----------
     RA[i] = Serial.read();
     delay(10);
   }
@@ -77,7 +77,7 @@ bool gravarPresenca(String leitura, String data){
     return false;
   }
   else{
-    Serial.print("Mensagem gravada no cartao: ");
+    Serial.print("Mensagem gravada no cartao: "); //---------------------------------------FLAG SD CARD-----------
     Serial.print(leitura);
     Serial.print(" ");
     Serial.println(data);
@@ -88,7 +88,7 @@ bool gravarPresenca(String leitura, String data){
 }
 
 void iniciarDia(){
-  dataHj = word(analogRead(A0));
+  dataHj = word(analogRead(A0)); //---------------------------------------FLAG RTC-----------
   report("Inicio do programa");
   AlunosRegistrados = 0;
 }
@@ -100,7 +100,7 @@ void encerrarDia(){
 }
 
 void report(String message){
-  Serial.println(message);
+  Serial.println(message); //---------------------------------------FLAG LCD-----------
 }
 
 void inicializarPerifericos(){
