@@ -16,7 +16,6 @@
 
 
  /*  TODO:
-  *  Implementar quebra de linha do LCD
  */
 #define PROFESSOR "165215"                         //RA do professor
 
@@ -100,7 +99,10 @@ void encerrarDia(){
 }
 
 void report(String message){
-  Serial.println(message); //---------------------------------------FLAG LCD-----------
+  String linhas[2];
+  quebra(message,linhas);
+  Serial.println(linhas[0]); //---------------------------------------FLAG LCD-----------
+  Serial.println(linhas[1]);
 }
 
 void inicializarPerifericos(){
@@ -113,4 +115,20 @@ bool jaCadastrado(String aluno){
     return true;
   ultimoCadastrado = aluno;
   return false;
+}
+
+
+void quebra(String message, String linhas[]) {
+  int i;
+  if(message[16] == ' '){
+    i=16;
+  }
+  else{
+    for(i=15;i>=0;i--){
+      if(message[i] == ' ')
+        break;
+    }
+  }
+  linhas[0] = (message.substring(0,i));
+  linhas[1] = (message.substring(i+1));
 }
