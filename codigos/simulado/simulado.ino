@@ -21,9 +21,7 @@
 
 //Global Var
 String dataHj;
-String listaDePresenca[100];
 String ultimoCadastrado;
-int AlunosRegistrados;
 /****************************************************************************/
 
 void setup() {
@@ -80,8 +78,6 @@ bool gravarPresenca(String leitura, String data){
     Serial.print(leitura);
     Serial.print(" ");
     Serial.println(data);
-    listaDePresenca[AlunosRegistrados] = leitura;
-    AlunosRegistrados++;
     return true;
   }
 }
@@ -89,7 +85,6 @@ bool gravarPresenca(String leitura, String data){
 void iniciarDia(){
   dataHj = word(analogRead(A0)); //---------------------------------------FLAG RTC-----------
   report("Inicio do programa");
-  AlunosRegistrados = 0;
 }
 
 void encerrarDia(){
