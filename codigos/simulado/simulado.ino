@@ -105,7 +105,7 @@ void report(String message){
   Serial.println(linhas[1]);
 }
 
-void inicializarPerifericos(){
+void inicializarPerifericos(){ //---------------------------------------FLAG all setups-----------
   String dataHj = "inicio";
   Serial.begin(9600);
 }
@@ -120,14 +120,9 @@ bool jaCadastrado(String aluno){
 
 void quebra(String message, String linhas[]) {
   int i;
-  if(message[16] == ' '){
-    i=16;
-  }
-  else{
-    for(i=15;i>=0;i--){
-      if(message[i] == ' ')
-        break;
-    }
+  for(i=16;i>=0;i--){
+    if(message[i] == ' ')
+      break;
   }
   linhas[0] = (message.substring(0,i));
   linhas[1] = (message.substring(i+1));
