@@ -77,7 +77,6 @@ void loop() {
 
 //Funções auxiliares
 String digitalLida(){
-  String RA= "000000";
   int IDlido;
   
   while(Serial.available() <= 0){
