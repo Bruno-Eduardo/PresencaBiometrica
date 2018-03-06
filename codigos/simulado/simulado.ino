@@ -89,7 +89,7 @@ String digitalLida(){
     char flush = Serial.read();
     delay(10);
   }
-  if(IDlido >= (sizeof( sala ) / sizeof( sala[0] )))
+  if(IDlido >= (sizeof( sala ) / sizeof( sala[0] )) && IDlido < 0)
     return "-1";
   return sala[IDlido].RA;
 }
@@ -138,7 +138,6 @@ bool jaCadastrado(String aluno){
   ultimoCadastrado = aluno;
   return false;
 }
-
 
 void quebra(String message, String linhas[]) {
   int i;
