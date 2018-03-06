@@ -16,18 +16,15 @@
 
 
  /*  TODO:
-  *    Implementar struct{int ID,StringRA}
-  *    Criar vetor de RAs arbitrarios
-  *    Criar funcao de um professor para posterior evolucao (mais de um professor)
-  *    Criar uma nova enroll q salve num txt a lista de IDs e RAs
-  *    Criar funcao q importe os IDs e RAs dum txt
-  *     
+  *  Implementar quebra de linha do LCD
  */
 #define PROFESSOR "165215"                         //RA do professor
 
 //Global Var
 String dataHj;
+String listaDePresenca[100];
 String ultimoCadastrado;
+int AlunosRegistrados;
 /****************************************************************************/
 
 void setup() {
@@ -35,16 +32,16 @@ void setup() {
   inicializarPerifericos();
   do{
     leitura = digitalLida();
-    if(!ehProfessor(leitura))
+    if(leitura != PROFESSOR)
       report("Esperando professor");
     delay(100);
-  }while(!ehProfessor(leitura));
+  }while(leitura != PROFESSOR);
   iniciarDia();
 }
 
 void loop() {
   String leitura = digitalLida();
-  if(ehProfessor(leitura)){
+  if(leitura == PROFESSOR){
     encerrarDia();
   }
   else{
@@ -84,6 +81,8 @@ bool gravarPresenca(String leitura, String data){
     Serial.print(leitura);
     Serial.print(" ");
     Serial.println(data);
+    listaDePresenca[AlunosRegistrados] = leitura;
+    AlunosRegistrados++;
     return true;
   }
 }
@@ -91,6 +90,7 @@ bool gravarPresenca(String leitura, String data){
 void iniciarDia(){
   dataHj = word(analogRead(A0)); //---------------------------------------FLAG RTC-----------
   report("Inicio do programa");
+  AlunosRegistrados = 0;
 }
 
 void encerrarDia(){
@@ -106,7 +106,7 @@ void report(String message){
   Serial.println(linhas[1]);
 }
 
-void inicializarPerifericos(){ //---------------------------------------FLAG all setups-----------
+void inicializarPerifericos(){
   String dataHj = "inicio";
   Serial.begin(9600);
 }
@@ -121,16 +121,15 @@ bool jaCadastrado(String aluno){
 
 void quebra(String message, String linhas[]) {
   int i;
-  for(i=16;i>=0;i--){
-    if(message[i] == ' ')
-      break;
+  if(message[16] == ' '){
+    i=16;
+  }
+  else{
+    for(i=15;i>=0;i--){
+      if(message[i] == ' ')
+        break;
+    }
   }
   linhas[0] = (message.substring(0,i));
   linhas[1] = (message.substring(i+1));
-}
-
-bool ehProfessor(String candidato){
-  if(candidato == PROFESSOR)
-    return true;
-  return false;
 }
