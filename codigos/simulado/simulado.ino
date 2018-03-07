@@ -34,34 +34,28 @@ Aluno sala[] = {
                 {1,165215},
                 {2,165216},
                 {3,165217},
-                {1,165215},
-                {2,165216},
-                {3,165217},
-                {1,165215},
-                {2,165216},
-                {3,165217},
-                {1,165215},
-                {2,165216},
-                {3,165217},
-                {1,165215},
-                {2,165216},
-                {3,165217},
+                {4,165215},
+                {5,165216},
+                {6,165217},
+                {7,165215},
+                {8,165216},
+                {9,165217}
                 };
 //Global Var
 String dataHj;
-String ultimoCadastrado;
+long ultimoCadastrado;
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 /****************************************************************************/
 
 void setup() {
-  String leitura;
+  long leitura;
   
   inicializarPerifericos();
   delay(100);
   report("Esperando professor");
   
   do{
-    leitura = String(digitalLida());
+    leitura = digitalLida();
     if(!ehProfessor(leitura)){
       report("Digital invalida");
       delay(700);
@@ -75,7 +69,8 @@ void setup() {
 void loop() {
   delay(1000);
   report("Esperando digital");
-  String leitura = String(digitalLida());
+  long leitura = digitalLida();
+  
   if(valido(leitura)){  
     if(ehProfessor(leitura)){
       encerrarDia();
@@ -83,7 +78,7 @@ void loop() {
     else{
      bool ok = gravarPresenca(leitura, dataHj);
      if(ok){
-       report("Aluno " + leitura + " presente!");
+       report("Aluno " + String(leitura) + " presente!");
      }
     }
   }
@@ -111,7 +106,7 @@ long digitalLida(){
   return sala[IDlido].RA;
 }
 
-bool gravarPresenca(String leitura, String data){
+bool gravarPresenca(long leitura, String data){
   //Insere o RA e a data da presenca no arquivo aberto
   if(jaCadastrado(leitura)){
     report("Presenca ja cadastrada");
@@ -119,7 +114,7 @@ bool gravarPresenca(String leitura, String data){
   }
   else{
     Serial.print("Mensagem gravada no cartao: "); //---------------------------------------FLAG SD CARD-----------
-    Serial.print(leitura);
+    Serial.print(String(leitura));
     Serial.print(" ");
     Serial.println(data);
     return true;
@@ -156,7 +151,7 @@ void inicializarPerifericos(){ //---------------------------------------FLAG all
   lcd.begin(16, 2);
 }
 
-bool jaCadastrado(String aluno){
+bool jaCadastrado(long aluno){
   if(ultimoCadastrado == aluno)
     return true;
   ultimoCadastrado = aluno;
@@ -183,8 +178,17 @@ bool ehProfessor(String candidato){
   return false;
 }
 
-bool valido(String RA){
-  if(RA[0] == '-')
+bool ehProfessor(long candidato){
+  int tamanho = (sizeof( professores ) / sizeof( professores[0] ));
+  for(int i=0; i<tamanho; i++){
+    if(candidato == professores[i])
+      return true;
+    }
+  return false;
+}
+
+bool valido(long RA){
+  if(RA < 0)
     return false;
   return true;  
 }
