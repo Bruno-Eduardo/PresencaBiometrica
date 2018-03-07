@@ -69,6 +69,7 @@ void setup() {
 void loop() {
   delay(1000);
   report("Esperando digital");
+  
   long leitura = digitalLida();
   
   if(valido(leitura)){  
@@ -166,16 +167,6 @@ void quebra(String message, String linhas[]) {
   }
   linhas[0] = (message.substring(0,i));
   linhas[1] = (message.substring(i+1));
-}
-
-bool ehProfessor(String candidato){
-  int tamanho = (sizeof( professores ) / sizeof( professores[0] ));
-  for(int i=0; i<tamanho; i++){
-    String professor = String(professores[i]);
-    if(candidato == professor)
-      return true;
-    }
-  return false;
 }
 
 bool ehProfessor(long candidato){
