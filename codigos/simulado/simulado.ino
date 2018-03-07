@@ -16,29 +16,23 @@
 
 
  /*  TODO:
-  *    Implementar struct{int ID,StringRA}
-  *    Criar vetor de RAs arbitrarios
-  *    Criar funcao de um professor para posterior evolucao (mais de um professor)
   *    Criar uma nova enroll q salve num txt a lista de IDs e RAs
   *    Criar funcao q importe os IDs e RAs dum txt
-  *    Converter todas as strings de RA (7 bytes) por um long(4 bytes)
-  *      long val = 165215;
-  *      Serial.println(String(165215));
   *     
  */
-#define PROFESSOR "Labaki"                         //RA do professor
 
 typedef struct aluno{
-  int ID;
-  String RA;
+  short int ID;
+  long RA;
 } Aluno;
 
+long professores[] = {0};
 
 Aluno sala[] = {
-                {0, "Labaki"},
-                {1, "165215"},
-                {2, "165216"},
-                {3, "165217"},
+                {0,0},
+                {1,165215},
+                {2,165216},
+                {3,165217},
                 };
 //Global Var
 String dataHj;
@@ -50,7 +44,7 @@ void setup() {
   inicializarPerifericos();
   
   do{
-    leitura = digitalLida();
+    leitura = String(digitalLida());
     if(!ehProfessor(leitura))
       report("Esperando professor");
     delay(100);
@@ -59,7 +53,7 @@ void setup() {
 }
 
 void loop() {
-  String leitura = digitalLida();
+  String leitura = String(digitalLida());
   if(valido(leitura)){  
     if(ehProfessor(leitura)){
       encerrarDia();
@@ -76,7 +70,7 @@ void loop() {
 }
 
 //Funções auxiliares
-String digitalLida(){
+long digitalLida(){
   int IDlido;
   
   while(Serial.available() <= 0){
@@ -89,8 +83,8 @@ String digitalLida(){
     char flush = Serial.read();
     delay(10);
   }
-  if(IDlido >= (sizeof( sala ) / sizeof( sala[0] )) && IDlido < 0)
-    return "-1";
+  if(IDlido >= (sizeof( sala ) / sizeof( sala[0] )) || IDlido < 0)
+    return -1;
   return sala[IDlido].RA;
 }
 
@@ -116,6 +110,7 @@ void iniciarDia(){
 
 void encerrarDia(){
   report("Fim do dia");
+  Serial.end();
   delay(1000);
   asm volatile ("  jmp 0");
 }
@@ -150,8 +145,12 @@ void quebra(String message, String linhas[]) {
 }
 
 bool ehProfessor(String candidato){
-  if(candidato == PROFESSOR)
-    return true;
+  int tamanho = (sizeof( professores ) / sizeof( professores[0] ));
+  for(int i=0; i<tamanho; i++){
+    String professor = String(professores[i]);
+    if(candidato == professor)
+      return true;
+    }
   return false;
 }
 
