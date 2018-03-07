@@ -20,6 +20,7 @@
   *    Criar funcao q importe os IDs e RAs dum txt
   *     
  */
+#include <LiquidCrystal.h>
 
 typedef struct aluno{
   short int ID;
@@ -33,26 +34,47 @@ Aluno sala[] = {
                 {1,165215},
                 {2,165216},
                 {3,165217},
+                {1,165215},
+                {2,165216},
+                {3,165217},
+                {1,165215},
+                {2,165216},
+                {3,165217},
+                {1,165215},
+                {2,165216},
+                {3,165217},
+                {1,165215},
+                {2,165216},
+                {3,165217},
                 };
 //Global Var
 String dataHj;
 String ultimoCadastrado;
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 /****************************************************************************/
 
 void setup() {
   String leitura;
+  
   inicializarPerifericos();
+  delay(100);
+  report("Esperando professor");
   
   do{
     leitura = String(digitalLida());
-    if(!ehProfessor(leitura))
-      report("Esperando professor");
+    if(!ehProfessor(leitura)){
+      report("Digital invalida");
+      delay(700);
+      report("Esperando professor");  
+    }
     delay(100);
   }while(!ehProfessor(leitura));
   iniciarDia();
 }
 
 void loop() {
+  delay(1000);
+  report("Esperando digital");
   String leitura = String(digitalLida());
   if(valido(leitura)){  
     if(ehProfessor(leitura)){
@@ -60,8 +82,9 @@ void loop() {
     }
     else{
      bool ok = gravarPresenca(leitura, dataHj);
-     if(ok)
+     if(ok){
        report("Aluno " + leitura + " presente!");
+     }
     }
   }
   else{
@@ -72,7 +95,7 @@ void loop() {
 //Funções auxiliares
 long digitalLida(){
   int IDlido;
-  
+
   while(Serial.available() <= 0){
     delay(100);
   }
@@ -106,6 +129,8 @@ bool gravarPresenca(String leitura, String data){
 void iniciarDia(){
   dataHj = word(analogRead(A0)); //---------------------------------------FLAG RTC-----------
   report("Inicio do programa");
+  delay(1000);
+  report("Esperando digital");
 }
 
 void encerrarDia(){
@@ -118,13 +143,17 @@ void encerrarDia(){
 void report(String message){
   String linhas[2];
   quebra(message,linhas);
-  Serial.println(linhas[0]); //---------------------------------------FLAG LCD-----------
-  Serial.println(linhas[1]);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print(linhas[0]);
+  lcd.setCursor(0,1);
+  lcd.print(linhas[1]);
 }
 
 void inicializarPerifericos(){ //---------------------------------------FLAG all setups-----------
   String dataHj = "inicio";
   Serial.begin(9600);
+  lcd.begin(16, 2);
 }
 
 bool jaCadastrado(String aluno){
