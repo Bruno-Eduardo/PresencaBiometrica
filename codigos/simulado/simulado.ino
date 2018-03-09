@@ -21,6 +21,9 @@
   *     
  */
 #include <LiquidCrystal.h>
+#include <DS1307.h>
+
+#define RTC_ON false
 
 typedef struct aluno{
   short int ID;
@@ -42,6 +45,7 @@ Aluno sala[] = {
 String dataHj;
 long ultimoCadastrado;
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+DS1307 rtc(A4, A5);
 /****************************************************************************/
 
 void setup() {
@@ -121,6 +125,8 @@ bool gravarPresenca(long leitura, String data){
 
 void iniciarDia(){
   dataHj = word(analogRead(A0)); //---------------------------------------FLAG RTC-----------
+  if(RTC_ON)
+    dataHj = rtc.getDateStr(FORMAT_SHORT);
   report("Inicio do programa");
   delay(1000);
   report("Esperando digital");
@@ -147,6 +153,11 @@ void inicializarPerifericos(){ //---------------------------------------FLAG all
   String dataHj = "inicio";
   Serial.begin(9600);
   lcd.begin(16, 2);
+  if(RTC_ON){
+    rtc.halt(false);
+    rtc.setSQWRate(SQW_RATE_1);
+    rtc.enableSQW(true);  
+  }
 }
 
 bool jaCadastrado(long aluno){
