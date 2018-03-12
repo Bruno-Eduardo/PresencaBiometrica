@@ -115,21 +115,22 @@ bool gravarPresenca(long leitura, String data){
     return false;
   }
   else{
-    Serial.print("Mensagem gravada no cartao: "); //---------------------------------------FLAG SD CARD-----------
+    //Serial.print("Mensagem gravada no cartao: "); //---------------------------------------FLAG SD CARD-----------
     Serial.print(String(leitura));
-    Serial.print(" ");
-    Serial.println(data);
+    Serial.print(",");
+    Serial.println(data + ".03.2018");
     return true;
   }
 }
 
 void iniciarDia(){
-  dataHj = word(analogRead(A0)); //---------------------------------------FLAG RTC-----------
+  dataHj = word(analogRead(A0))%31; //---------------------------------------FLAG RTC-----------
   if(RTC_ON)
     dataHj = rtc.getDateStr(FORMAT_SHORT);
   report("Inicio do programa");
   delay(1000);
   report("Esperando digital");
+  Serial.println("Mensagem gravada no cartao: ");
 }
 
 void encerrarDia(){

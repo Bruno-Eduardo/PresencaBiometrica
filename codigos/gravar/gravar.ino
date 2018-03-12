@@ -4,12 +4,13 @@
 #include <Adafruit_Fingerprint.h>
 #include <SoftwareSerial.h>
 
-
-Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 uint8_t id;
+
 uint8_t getFingerprintEnroll();
+
 SoftwareSerial mySerial(2, 3); // Pino 2 como entrada do sensor (fio Verde)
                                // Pino 3 como saída do sendor (fio Branco)
+Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
 void setup()  {
   Serial.begin(9600);
@@ -48,7 +49,9 @@ void loop()   {
   Serial.print("Inscrever ID#");
   Serial.println(id);
 
-  while (!  getFingerprintEnroll() );
+  while (!  getFingerprintEnroll() ){
+    ;
+  }
 }
 
 uint8_t getFingerprintEnroll() {
@@ -199,6 +202,7 @@ uint8_t getFingerprintEnroll() {
     Serial.println("Erro Desconhecido");
     return p;
   }
+  
 }
 
 
