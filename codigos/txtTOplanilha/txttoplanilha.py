@@ -47,10 +47,10 @@ for candidato in presencas:
             alunos.append(candidato[0])
 alunos.sort()
 dias.sort()
-print alunos
-print "-----------"
-print dias
-print "-----------"
+print(alunos)
+print("-----------")
+print(dias)
+print("-----------")
 #inicializar matriz
 matriz = []
 for aluno in alunos:
@@ -67,7 +67,11 @@ for i in range(len(matriz)):
 #atribuir presencas para a matriz
 for presenca in presencas:
     matriz[alunos.index(presenca[0])][dias.index(presenca[3])+1] = 1
-print matriz
+
+
+for linha in matriz:
+    print(linha)
+print("-----------")
 
 #limpar informacoes iguais
 
@@ -75,6 +79,17 @@ print matriz
 prim = ["RA"]
 for i in dias:
     prim.append(str(i))
+
+# Soma das presencas
+prim.append("Presenças")
+prim.append("Porcentagem")
+for aluno in matriz:
+    presenca = 0
+    for dia in aluno:
+        if dia == 1:
+            presenca += 1
+    aluno.append(presenca)
+    aluno.append(str(round(presenca*100/len(dias),2)) + "%")
 
 #Gravar numa planilha
 with open('planilha_de_presenca.csv', 'w') as arq:
