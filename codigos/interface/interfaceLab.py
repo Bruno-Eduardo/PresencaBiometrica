@@ -110,7 +110,6 @@ class Janela:
         ftypes = [('.png (PNG)', '*.png')]
         f = asksaveasfilename(filetypes=ftypes, defaultextension=".png")
 
-        print(f)
 
         if f != '':
             self.fig.savefig(f)
@@ -118,7 +117,6 @@ class Janela:
         ftypes = [('.xls (Excel)', '*.xls')]
         f = asksaveasfilename(filetypes=ftypes, defaultextension=".xls")
 
-        print(f)
 
         if f != '':
             df = pd.DataFrame(self.dados)
