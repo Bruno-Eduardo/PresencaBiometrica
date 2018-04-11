@@ -22,8 +22,11 @@
  */
 #include <LiquidCrystal.h>
 #include <DS1307.h>
+#include <SPI.h>
+#include <SD.h>
 
 #define RTC_ON false
+#define DESLIGAR asm volatile ("  jmp 0")
 
 typedef struct aluno{
   short int ID;
@@ -46,6 +49,7 @@ String dataHj;
 long ultimoCadastrado;
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 DS1307 rtc(A4, A5);
+File myFile;
 /****************************************************************************/
 
 void setup() {
@@ -115,10 +119,17 @@ bool gravarPresenca(long leitura, String data){
     return false;
   }
   else{
-    //Serial.print("Mensagem gravada no cartao: "); //---------------------------------------FLAG SD CARD-----------
-    Serial.print(String(leitura));
-    Serial.print(",");
-    Serial.println(data + ".03.2018");
+    // Salva a presenca no cartao
+    myFile = SD.open("test.txt", FILE_WRITE);
+    // Se conseguir abrir, salve
+    if (myFile) {
+      myFile.println(String(leitura) + "," + data + ".03.2018");
+      myFile.close();
+    }
+    // Se nao conseguir abrir reporte
+    else {
+      report("Erro no SD Card");
+    }
     return true;
   }
 }
@@ -130,14 +141,13 @@ void iniciarDia(){
   report("Inicio do programa");
   delay(1000);
   report("Esperando digital");
-  Serial.println("Mensagem gravada no cartao: ");
 }
 
 void encerrarDia(){
   report("Fim do dia");
   Serial.end();
   delay(1000);
-  asm volatile ("  jmp 0");
+  DESLIGAR;
 }
 
 void report(String message){
@@ -153,11 +163,23 @@ void report(String message){
 void inicializarPerifericos(){ //---------------------------------------FLAG all setups-----------
   String dataHj = "inicio";
   Serial.begin(9600);
+  
+  //LCD setup
   lcd.begin(16, 2);
+  
+  //RTC setup
   if(RTC_ON){
     rtc.halt(false);
     rtc.setSQWRate(SQW_RATE_1);
     rtc.enableSQW(true);  
+  }
+
+  //SD CARD setup
+  if (!SD.begin(10)) {
+    report("Problema com o cartao SD");
+    delay(2000);
+    DESLIGAR;
+    return;
   }
 }
 
