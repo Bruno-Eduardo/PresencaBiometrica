@@ -1,7 +1,7 @@
 /*
  *
  * Desenvolvido por Bruno Oliveira - bruno97br@gmail.com
- *  Ultimo update - 01/03/2017
+ *  Ultimo update - 12/04/2018
  *
  * Infos:
  *      RTC:
@@ -27,6 +27,9 @@
 
 #define RTC_ON false
 #define DESLIGAR asm volatile ("  jmp 0")
+#define NOMEDOARQUIVO "entradas.csv"
+#define TEMPOLIMITE 1000
+#define VAZIO -2
 
 typedef struct aluno{
   short int ID;
@@ -35,7 +38,7 @@ typedef struct aluno{
 
 long professores[] = {0};
 
-Aluno sala[] = {
+Aluno sala[] =  {
                 {0,0},
                 {1,165215},
                 {2,165216},
@@ -57,11 +60,11 @@ void setup() {
   
   inicializarPerifericos();
   delay(100);
-  report("Esperando professor");
   
   do{
+    report("Esperando professor");
     leitura = digitalLida();
-    if(!ehProfessor(leitura)){
+    if(!ehProfessor(leitura) && leitura != VAZIO){      
       report("Digital invalida");
       delay(700);
       report("Esperando professor");  
@@ -74,22 +77,38 @@ void setup() {
 void loop() {
   delay(1000);
   report("Esperando digital");
+
+  // Se o programa do computador estiver comunicando execute suas instrucoes
+
+  while(Serial.available() == 0){;}
   
-  long leitura = digitalLida();
-  
-  if(valido(leitura)){  
-    if(ehProfessor(leitura)){
-      encerrarDia();
+  char interrupChar = Serial.peek();
+  if(isAlpha(interrupChar)){
+    interrupcao(interrupChar);
+  }
+
+  // Se o programa nao estiver, continue com a rotina de ler digitais
+  else{
+    long leitura = digitalLida();
+    
+    if(valido(leitura)){  
+      if(ehProfessor(leitura)){
+        encerrarDia();
+      }
+      else{
+       bool ok = gravarPresenca(leitura, dataHj);
+       if(ok){
+         report("Aluno " + String(leitura) + " presente!");
+       }
+      }
+    }
+    //Caso nao tenha encontrado um digital em TEMPOLIMITE(mili segundos), reinicie a rotina
+    else if(leitura == VAZIO){
+      ;
     }
     else{
-     bool ok = gravarPresenca(leitura, dataHj);
-     if(ok){
-       report("Aluno " + String(leitura) + " presente!");
-     }
+      report("Problema ao ler digital");
     }
-  }
-  else{
-    report("Problema ao ler digital");
   }
 }
 
@@ -97,9 +116,20 @@ void loop() {
 long digitalLida(){
   int IDlido;
 
-  while(Serial.available() <= 0){
-    delay(100);
+  int tempoini = millis();
+  boolean flagNotOut = true;
+  
+  while((millis() < tempoini+TEMPOLIMITE) and (flagNotOut)){
+    if(Serial.available() > 0)
+      if (isAlpha(Serial.peek()) == false)
+        flagNotOut = false;
+      else{
+        interrupcao(Serial.peek());  
+      }
   }
+    
+  if(flagNotOut == true)
+    return VAZIO;  
 
   IDlido = int(Serial.read()) - '0'; //---------------------------------------FLAG LEITORBIOMETRICO-----------
   
@@ -120,10 +150,10 @@ bool gravarPresenca(long leitura, String data){
   }
   else{
     // Salva a presenca no cartao
-    myFile = SD.open("test.txt", FILE_WRITE);
+    myFile = SD.open(NOMEDOARQUIVO, FILE_WRITE);
     // Se conseguir abrir, salve
     if (myFile) {
-      myFile.println(String(leitura) + "," + data + ".03.2018");
+      myFile.println(String(leitura) + "," + data);
       myFile.close();
     }
     // Se nao conseguir abrir reporte
@@ -134,13 +164,65 @@ bool gravarPresenca(long leitura, String data){
   }
 }
 
+void interrupcao(char interrup){
+  // Lista de interrupcoes possiveis pelo  programa e seus significados
+  // a : Cadastrar novo aluno
+  // b : Enviar txt com a lista de presenca
+  // c : Nao implementado
+  // d : Nao implementado
+  // e : Nao implementado
+
+  Serial.read(); // Le o caracter relativo a interrpcao
+
+  switch (interrup){
+    case 'a':
+            enroll();
+            break;
+    case 'b':
+            dumpFile(NOMEDOARQUIVO);
+            break;
+    case 'c':
+            ;
+            break;
+    case 'd':
+            ;
+            break;
+    case 'e':
+            ;
+            break;
+  }
+}
+
+void enroll(){
+  report("NOVA DIGITAL IMAGINARIA");
+  return ;  
+}
+
+void dumpFile(String arquivo){
+  File dataFile = SD.open(arquivo);
+
+  // Se o arquivo estiver legivel, copie:
+  if (dataFile) {
+    while (dataFile.available()) {
+      Serial.write(dataFile.read());
+    }
+    dataFile.close();
+    report("Arquivo transmitido");
+  }
+  // Se nao conseguir ler, reporte o erro e desligue:
+  else {
+    report("ERRO NO CARTAO"); delay(2000);
+    report("NENHUM DADO TRANSMITIDO"); delay(2000);
+    DESLIGAR;
+  }
+}
+
 void iniciarDia(){
-  dataHj = word(analogRead(A0))%31; //---------------------------------------FLAG RTC-----------
+  int leitura = analogRead(A0) % 31;
+  dataHj =  String(leitura) + ".03.2018"; //---------------------------------------FLAG RTC-----------
   if(RTC_ON)
     dataHj = rtc.getDateStr(FORMAT_SHORT);
   report("Inicio do programa");
-  delay(1000);
-  report("Esperando digital");
 }
 
 void encerrarDia(){
