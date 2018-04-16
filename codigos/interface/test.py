@@ -45,14 +45,14 @@ class Janela:
             self.button_update_ports.grid(row=0, column=1, sticky='NSEW')
 
         # Second Line
-        self.button_truco = Button(
+        self.button_cad = Button(
             self.raiz, text='Cadastrar aluno', command=self.cadastro)
-        self.button_truco.grid(row=1, column=0, sticky='NSEW')
+        self.button_cad.grid(row=1, column=0, sticky='NSEW')
 
         # Second Line
-        self.button_truco = Button(
+        self.button_pla = Button(
             self.raiz, text='Gerar planilha', command=self.geracsv)
-        self.button_truco.grid(row=1, column=1, sticky='NSEW')
+        self.button_pla.grid(row=1, column=1, sticky='NSEW')
 
         self.update_ports()
 
@@ -149,13 +149,30 @@ class Janela:
 
 
 def enviarleitura(porta,leitura):
+
     print("enviando: " + str(leitura))
-    SerialCompy.cadastrar(porta,leitura)
+    tentativa = SerialCompy.cadastrar(porta,leitura)
+    if(tentativa == "Cadastrou"):
+        messagebox.showinfo("OK", "Aluno " + leitura + " cadastrado")
+    else:
+        messagebox.showinfo("Erro", "Nao consegui cadastrar")
 
 def gerarPlanilha():
     return txttoplanilha.gerar('planilha_de_presenca.csv')
 
+def arrumarPos(root):
+    w = 300 # width for the Tk root
+    h = 50 # height for the Tk root
+
+    ws = root.winfo_screenwidth() # width of the screen
+    hs = root.winfo_screenheight()
+
+    x = (ws/2) - (w/2)
+    y = (hs/2) - (h/2)
+
+    root.geometry('%dx%d+%d+%d' % (w, h, x, y))
+
 raiz = Tk()
-raiz.resizable(width=False, height=False)
+arrumarPos(raiz)
 Janela(raiz)
 raiz.mainloop()

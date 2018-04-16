@@ -176,7 +176,7 @@ void interrupcao(char interrup){
 
   switch (interrup){
     case 'a':
-            enroll();
+            cadastro();
             break;
     case 'b':
             dumpFile(NOMEDOARQUIVO);
@@ -193,9 +193,31 @@ void interrupcao(char interrup){
   }
 }
 
-void enroll(){
-  report("NOVA DIGITAL IMAGINARIA");
-  return ;  
+void cadastro(){
+  String RAnovo = "000000";
+  
+  report("Novo Cadastro");
+
+  delay(1000);
+
+  for (int i=0;i<6;i++)
+    RAnovo[i] = Serial.read();
+
+  if (enroll(RAnovo) == true){
+    report("RA " + RAnovo + " Cadastrado!");
+    Serial.write("1");
+    delay(1000);
+  }
+  else{
+    report("Problema ao cadastrar");
+    Serial.write("0");
+    delay(1000);
+  }
+  
+}
+
+bool enroll(String RA){
+  return true;
 }
 
 void dumpFile(String arquivo){
