@@ -81,13 +81,14 @@ class Janela:
     def geracsv(self):
         if(self.ArduinoEncontrado == True):
 
-            if gerarPlanilha:
+            if gerarPlanilha(self.portaSerial):
                 messagebox.showinfo("", "Planilha gerada")
 
                 def callback():
                     plan.destroy()
                 def abrirPlanilha():
                     os.system("libreoffice planilha_de_presenca.csv")
+                    print("aqui abre a planilha!")
                     plan.destroy()
 
 
@@ -98,16 +99,6 @@ class Janela:
 
                 b2 = Button(plan, text="Retornar", width=30, command=callback)
                 b2.grid(row=0, column=1, sticky='NSEW')
-
-                mainloop()
-
-
-                plan = Tk()
-                b1 = Button(plan, text="Abrir", width=30, command=plan.destroy())
-                b1.pack()
-
-                b2 = Button(plan, text="Retornar", width=30, command=plan.destroy())
-                b2.pack()
 
                 mainloop()
             else:
@@ -157,12 +148,21 @@ def enviarleitura(porta,leitura):
     else:
         messagebox.showinfo("Erro", "Nao consegui cadastrar")
 
-def gerarPlanilha():
-    return txttoplanilha.gerar('planilha_de_presenca.csv')
+def gerarPlanilha(porta):
+
+    print("buscando csv no arduino...")
+    planilhaDumpada = SerialCompy.buscaPlanilha(porta)
+    if(planilhaDumpada):
+        print("\n" + "Planilha dumpada com sucesso")
+    else:
+        messagebox.showinfo("Erro", "Nao consegui ler a planilha do arduino")
+        return False
+
+    return txttoplanilha.gerar('planilha_de_presenca.csv','entradas.csv')
 
 def arrumarPos(root):
-    w = 300 # width for the Tk root
-    h = 50 # height for the Tk root
+    w = 277 # width for the Tk root
+    h = 44 # height for the Tk root
 
     ws = root.winfo_screenwidth() # width of the screen
     hs = root.winfo_screenheight()

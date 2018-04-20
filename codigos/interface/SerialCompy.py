@@ -4,6 +4,7 @@
 import serial
 import serial.tools.list_ports
 import time
+import csv
 
 def conectar():
     try:
@@ -41,7 +42,27 @@ def cadastrar(ser, RA):
         return "Cadastrou"
     else:
         return "ERRO"
+def buscaPlanilha(ser):
+    ser.write("b".encode('utf-8'))
 
+    time.sleep(1)
+
+    texto = (str(ser.read(ser.inWaiting())))
+    texto = str(texto[2:-1])
+    textoSeparado = texto.split("\\r\\n")
+
+    file  = open("entradas.csv","w")
+    i = 0
+    tam = len(textoSeparado)
+    for i in range(0,tam):
+        if(i < tam-1):
+            file.write(textoSeparado[i] + '\r\n')
+        else:
+            file.write(textoSeparado[i])
+        i += 1
+    file.close()
+
+    return True
 
 def fechar(ser):
     ser.close()             # close port

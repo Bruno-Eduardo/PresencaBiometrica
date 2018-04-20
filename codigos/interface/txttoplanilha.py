@@ -2,14 +2,17 @@
 
 import csv
 
-def gerar(plansaida):
+def gerar(plansaida, entradas):
     presencas = []
 
     #Ler o input
-    with open('entradas.csv') as arq:
+    with open(entradas) as arq:
         arqCsv = csv.reader(arq)
 
+
         for linha in arqCsv:
+            if(len(linha) == 0):
+                return False
             diaMes = linha[1].split(',')
             diaMes = diaMes[0].split('.')
             aluno = [linha[0].split(',')[0], diaMes[0], diaMes[1]]
