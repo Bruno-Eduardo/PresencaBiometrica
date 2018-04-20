@@ -27,32 +27,21 @@
 
 #define RTC_ON false
 #define DESLIGAR asm volatile ("  jmp 0")
-#define NOMEDOARQUIVO "entradas.csv"
+#define ARQUIVODEENTRADAS "ENTRADAS.CSV"
+#define ARQUIVODEALUNOS "ALUNOS.TXT"
 #define TEMPOLIMITE 1000
 #define VAZIO -2
 
-typedef struct aluno{
-  short int ID;
-  long RA;
-} Aluno;
-
 long professores[] = {0};
-
-Aluno sala[] =  {
-                {0,0},
-                {1,165215},
-                {2,165216},
-                {3,165217},
-                {4,165218},
-                {5,165219},
-                };
 
 //Global Var
 String dataHj;
 long ultimoCadastrado;
+int quantDeAlunos;
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 DS1307 rtc(A4, A5);
 File myFile;
+String lista[] = {ARQUIVODEALUNOS, ARQUIVODEENTRADAS};
 /****************************************************************************/
 
 void setup() {
@@ -137,9 +126,41 @@ long digitalLida(){
     char flush = Serial.read();
     delay(10);
   }
-  if(IDlido >= (sizeof( sala ) / sizeof( sala[0] )) || IDlido < 0)
+  if(IDlido > quantDeAlunos || IDlido < 0)
     return -1;
-  return sala[IDlido].RA;
+
+  return ID2RA(IDlido);
+}
+
+long ID2RA(int IDlido){
+
+  //Tenta ler a lista de alunos
+    File dataFile = SD.open(ARQUIVODEALUNOS);
+    long RA = 0;
+    int li;
+    int IDref;
+    // Se o arquivo estiver nao estiver legivel, retorne um RA Invalido (-1):
+    if (dataFile) {
+      while (dataFile.available()) {
+        //Le o RA
+        RA=0;
+        for(int i=0; i<6; i++){
+          li = dataFile.read() - '0';
+          RA = RA*10 +  li;
+        }
+        IDref = dataFile.read();
+        
+        // Se o ID for o certo retorne esse RA
+        if(IDref == IDlido){
+          dataFile.close();
+          return RA;
+        }
+      }
+    }
+    // Se o arquivo estiver nao estiver legivel ou o ID não existir, retorne um RA Invalido (-1):
+
+    dataFile.close();
+    return -1;
 }
 
 bool gravarPresenca(long leitura, String data){
@@ -150,7 +171,7 @@ bool gravarPresenca(long leitura, String data){
   }
   else{
     // Salva a presenca no cartao
-    myFile = SD.open(NOMEDOARQUIVO, FILE_WRITE);
+    myFile = SD.open(ARQUIVODEENTRADAS, FILE_WRITE);
     // Se conseguir abrir, salve
     if (myFile) {
       myFile.println(String(leitura) + "," + data);
@@ -168,24 +189,36 @@ void interrupcao(char interrup){
   // Lista de interrupcoes possiveis pelo  programa e seus significados
   // a : Cadastrar novo aluno
   // b : Enviar txt com a lista de presenca
-  // c : Nao implementado
-  // d : Nao implementado
+  // c : Deletar todos os dados
+  // d : Imprimir lista de alunos
   // e : Nao implementado
 
   Serial.read(); // Le o caracter relativo a interrpcao
 
   switch (interrup){
+    bool limpou;
+    
     case 'a':
             cadastro();
             break;
     case 'b':
-            dumpFile(NOMEDOARQUIVO);
+            dumpFile(ARQUIVODEENTRADAS);
             break;
     case 'c':
-            ;
+            report("Limpando todos dados!!!!!!");
+            delay(1000);
+            
+            limpou = delFiles(lista, 2);
+
+            quantDeAlunos = 0;
+            
+            if(limpou)
+              Serial.write("1");
+            else
+              Serial.write("0");
             break;
     case 'd':
-            ;
+            dumpFile(ARQUIVODEALUNOS);
             break;
     case 'e':
             ;
@@ -217,7 +250,18 @@ void cadastro(){
 }
 
 bool enroll(String RA){
-  return true;
+  
+  myFile = SD.open(ARQUIVODEALUNOS, FILE_WRITE);
+  // Se conseguir abrir, salve
+  if (myFile) {
+  quantDeAlunos++;
+    myFile.print(RA);
+    myFile.print(char(quantDeAlunos));
+    myFile.close();
+    return true;
+  }
+  else 
+    return false;
 }
 
 void dumpFile(String arquivo){
@@ -237,6 +281,14 @@ void dumpFile(String arquivo){
     report("NENHUM DADO TRANSMITIDO"); delay(2000);
     DESLIGAR;
   }
+}
+
+bool delFiles(String lista[], int sizeList){
+  for(int i=0; i<sizeList; i++){
+    if(SD.remove(lista[i]) == false)
+      return false;
+  }
+  return true;
 }
 
 void iniciarDia(){
@@ -284,6 +336,20 @@ void inicializarPerifericos(){ //---------------------------------------FLAG all
     delay(2000);
     DESLIGAR;
     return;
+  }
+  else{
+    File dataFile = SD.open(ARQUIVODEALUNOS);
+
+    // Se o arquivo estiver legivel, veja quantos alunos tem:
+    if (dataFile) {
+      while (dataFile.available()) {
+        quantDeAlunos = int(dataFile.read());
+      }
+    }
+    else{
+      quantDeAlunos = 0;
+    }
+    dataFile.close();
   }
 }
 
