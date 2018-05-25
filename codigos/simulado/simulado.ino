@@ -20,10 +20,29 @@
       Criar funcao q importe os IDs e RAs dum txt
 
 */
+
+
+/*
+    Gasto com variaveis globais:
+      Original 75%
+      apenas global var 53%
+      apenas objetos 50%
+      apenas bibliotecas 38%
+
+      1578 -> 76%
+      1528 -> 74%
+      1488 -> 72%
+      1460 -> 71%
+      1454 -> 70%
+*/
+
+
 #include <LiquidCrystal.h>
 #include <DS1307.h>
 #include <SPI.h>
 #include <SD.h>
+#include <Adafruit_Fingerprint.h>
+#include <SoftwareSerial.h>
 
 #define RTC_ON false
 #define DESLIGAR asm volatile ("  jmp 0")
@@ -32,16 +51,24 @@
 #define TEMPOLIMITE 1000
 #define VAZIO -2
 
+
+
 long professores[] = {0};
 
 //Global Var
 String dataHj = "8.03.2018";
 long ultimoCadastrado;
-int quantDeAlunos;
+short int quantDeAlunos;
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 DS1307 rtc(A4, A5);
 File myFile;
+SoftwareSerial mySerial(8, 9);
+Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 String lista[] = {ARQUIVODEALUNOS, ARQUIVODEENTRADAS};
+
+//Lista de Strings
+String problemSD = "Err1";
+
 /****************************************************************************/
 
 void setup() {
@@ -51,12 +78,12 @@ void setup() {
   delay(100);
 
   do {
-    report("Esperando professor");
+    report("Esperando prof");
     leitura = digitalLida();
     if (!ehProfessor(leitura) && leitura != VAZIO) {
       report("Digital invalida");
       delay(700);
-      report("Esperando professor");
+      report("Esperando prof");
     }
     delay(100);
   } while (!ehProfessor(leitura));
@@ -135,33 +162,34 @@ long digitalLida() {
 }
 
 long ID2RA(int IDlido) {
-
-  //Tenta ler a lista de alunos
-  File dataFile = SD.open(ARQUIVODEALUNOS);
   long RA = 0;
   int li;
   int IDref;
+
+  //Tenta ler a lista de alunos
+  myFile = SD.open(ARQUIVODEALUNOS);
+
   // Se o arquivo estiver nao estiver legivel, retorne um RA Invalido (-1):
-  if (dataFile) {
-    while (dataFile.available()) {
+  if (myFile) {
+    while (myFile.available()) {
       //Le o RA
       RA = 0;
       for (int i = 0; i < 6; i++) {
-        li = dataFile.read() - '0';
+        li = myFile.read() - '0';
         RA = RA * 10 +  li;
       }
-      IDref = dataFile.read();
+      IDref = myFile.read();
 
       // Se o ID for o certo retorne esse RA
       if (IDref == IDlido) {
-        dataFile.close();
+        myFile.close();
         return RA;
       }
     }
   }
   // Se o arquivo estiver nao estiver legivel ou o ID não existir, retorne um RA Invalido (-1):
 
-  dataFile.close();
+  myFile.close();
   return -1;
 }
 
@@ -181,7 +209,7 @@ bool gravarPresenca(long leitura, String data, bool forcado) {
     }
     // Se nao conseguir abrir reporte
     else {
-      report("Erro no SD Card");
+      report(problemSD);
     }
 
     report("Aluno " + String(leitura) + " presente!");
@@ -214,7 +242,7 @@ void interrupcao(char interrup) {
       dumpFile(ARQUIVODEENTRADAS);
       break;
     case 'c':
-      report("Limpando todos dados!!!!!!");
+      report("Limpando dados");
       delay(1000);
 
       limpou = delFiles(lista, 2);
@@ -283,35 +311,48 @@ void cadastro() {
 }
 
 bool enroll(String RA) {
-
+  bool flag = true;
   myFile = SD.open(ARQUIVODEALUNOS, FILE_WRITE);
   // Se conseguir abrir, salve
   if (myFile) {
+
+    do{
+      flag = !(getFingerprintEnroll());
+      if(flag){
+        report("nao cadast");
+      }
+      delay(1000);
+    }while(flag);
+    
     quantDeAlunos++;
     myFile.print(RA);
     myFile.print(char(quantDeAlunos));
     myFile.close();
+    
     return true;
   }
-  else
-    return false;
+  report("problem");
+  delay(2000);
+  return false;
 }
 
 void dumpFile(String arquivo) {
-  File dataFile = SD.open(arquivo);
+  myFile = SD.open(arquivo);
 
+  Serial.println(arquivo);
   // Se o arquivo estiver legivel, copie:
-  if (dataFile) {
-    while (dataFile.available()) {
-      Serial.write(dataFile.read());
+  if (myFile) {
+    while (myFile.available()) {
+      Serial.write(myFile.read());
     }
-    dataFile.close();
-    report("Arquivo transmitido");
+    myFile.close();
+    report("Transmitido");
   }
   // Se nao conseguir ler, reporte o erro e desligue:
   else {
-    report("ERRO NO CARTAO"); delay(2000);
-    report("NENHUM DADO TRANSMITIDO"); delay(2000);
+    report(problemSD);
+    myFile.close(); 
+    delay(2000);
     DESLIGAR;
   }
 }
@@ -329,11 +370,12 @@ void iniciarDia() {
   dataHj =  String(leitura) + ".03.2018"; //---------------------------------------FLAG RTC-----------
   if (RTC_ON)
     dataHj = rtc.getDateStr(FORMAT_SHORT);
-  report("Inicio do programa");
+  report("Inicio");
+  delay(1000);
 }
 
 void encerrarDia() {
-  report("Fim do dia");
+  report("Fim");
   Serial.end();
   delay(1000);
   DESLIGAR;
@@ -349,8 +391,8 @@ void report(String message) {
   lcd.print(linhas[1]);
 }
 
-void inicializarPerifericos() { //---------------------------------------FLAG all setups-----------
-  String dataHj = "inicio";
+void inicializarPerifericos() {
+  String dataHj = "0";
   Serial.begin(9600);
 
   //LCD setup
@@ -365,24 +407,32 @@ void inicializarPerifericos() { //---------------------------------------FLAG al
 
   //SD CARD setup
   if (!SD.begin(10)) {
-    report("Problema com o cartao SD");
+    report(problemSD);
     delay(2000);
     DESLIGAR;
     return;
   }
   else {
-    File dataFile = SD.open(ARQUIVODEALUNOS);
+    myFile = SD.open(ARQUIVODEALUNOS);
 
     // Se o arquivo estiver legivel, veja quantos alunos tem:
-    if (dataFile) {
-      while (dataFile.available()) {
-        quantDeAlunos = int(dataFile.read());
+    if (myFile) {
+      while (myFile.available()) {
+        quantDeAlunos = int(myFile.read());
       }
     }
     else {
       quantDeAlunos = 0;
     }
-    dataFile.close();
+    myFile.close();
+  }
+
+  //Biometric Sensor setup
+  finger.begin(57600);
+  if (finger.verifyPassword() == false) {
+    report("Error BioRead");
+    delay(2000);
+    DESLIGAR;
   }
 }
 
@@ -418,3 +468,54 @@ bool valido(long RA) {
     return false;
   return true;
 }
+
+bool getFingerprintEnroll() {
+
+  report("Coloque o dedo");
+
+  int id = quantDeAlunos;
+
+  int p = -1;
+
+  while (p != FINGERPRINT_OK) {
+    p = finger.getImage();
+  }
+
+  // OK success!
+
+  p = finger.image2Tz(1);
+  if (p != FINGERPRINT_OK) {
+      return false;
+  }
+
+  report("retire o dedo");
+  delay(2000);
+  p = 0;
+  while (p != FINGERPRINT_NOFINGER) {
+    p = finger.getImage();
+  }
+  p = -1;
+  
+
+  report("Coloque o dedo novamente");
+  delay(1000);
+
+  while (p != FINGERPRINT_OK) {
+    p = finger.getImage();
+  }
+
+  // OK success!
+
+  p = finger.image2Tz(2);
+  if(p != FINGERPRINT_OK);    return false;
+  
+  p = finger.createModel();
+  if (p != FINGERPRINT_OK)    return false;
+  
+  p = finger.storeModel(id);
+  if (p != FINGERPRINT_OK)    return false;
+
+  report("foi");
+  return true;
+}
+
