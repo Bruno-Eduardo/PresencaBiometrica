@@ -95,16 +95,16 @@ void loop() {
 
   // Se o programa do computador estiver comunicando execute suas instrucoes
 
-  while (Serial.available() == 0) {
-    ;
+  if (Serial.available() > 0) {
+    char interrupChar = Serial.peek();
+    if (isAlpha(interrupChar)) {
+      interrupcao(interrupChar);
+      delay(1000);
+      report(getString(4), 0);
+    }
   }
 
-  char interrupChar = Serial.peek();
-  if (isAlpha(interrupChar)) {
-    interrupcao(interrupChar);
-    delay(1000);
-    report(getString(4), 0);
-  }
+
 
   // Se o programa nao estiver, continue com a rotina de ler digitais
   else {
@@ -135,29 +135,33 @@ long digitalLida() {
 
   int tempoini = millis();
   boolean flagNotOut = true;
+  /*
+    while ((millis() < tempoini + TEMPOLIMITE) and (flagNotOut)) {
+      if (Serial.available() > 0)
+        if (isAlpha(Serial.peek()) == false)
+          flagNotOut = false;
+        else {
+          interrupcao(Serial.peek());
+          delay(2000);
+          report("",10);
+        }
+    }
 
-  while ((millis() < tempoini + TEMPOLIMITE) and (flagNotOut)) {
-    if (Serial.available() > 0)
-      if (isAlpha(Serial.peek()) == false)
-        flagNotOut = false;
-      else {
-        interrupcao(Serial.peek());
-        delay(2000);
-        report("",10);
-      }
-  }
-
-  if (flagNotOut == true)
+    if (flagNotOut == true)
+      return VAZIO;
+  */
+  if (Serial.available() > 0) {
+    interrupcao(Serial.peek());
+    delay(2000);
     return VAZIO;
-
-  IDlido = int(Serial.read()) - '0'; //---------------------------------------FLAG LEITORBIOMETRICO-----------
-
-  while (Serial.available() > 0) {
-    char flush = Serial.read();
-    delay(10);
   }
-  if (IDlido > quantDeAlunos || IDlido < 0)
+
+  IDlido = getFingerprintIDez(); //---------------------------------------FLAG LEITORBIOMETRICO-----------
+
+  if (IDlido > quantDeAlunos)
     return -1;
+  if (IDlido < 0)
+    return IDlido;
 
   return ID2RA(IDlido);
 }
@@ -190,7 +194,7 @@ long ID2RA(int IDlido) {
   }
   // Se o arquivo estiver nao estiver legivel ou o ID não existir, retorne um RA Invalido (-1):
 
-  if(arqID2RA)
+  if (arqID2RA)
     arqID2RA.close();
   return -1;
 }
@@ -317,7 +321,7 @@ bool enroll(String RA) {
 
     sucesso = false;
     while (sucesso == false)
-      while (!  getFingerprintEnroll(quantDeAlunos+1) );
+      while (!  getFingerprintEnroll(quantDeAlunos + 1) );
 
     quantDeAlunos++;
     arqEnroll.print(RA);
@@ -354,6 +358,8 @@ bool delFiles(String lista[], int sizeList) {
     if (SD.remove(lista[i]) == false)
       return false;
   }
+  finger.emptyDatabase();
+  delay(20);
   return true;
 }
 
@@ -541,4 +547,23 @@ String getString(int ID) {
 
   return resposta;
 
+}
+
+int getFingerprintIDez() {
+  int tempoentrada = millis();
+
+  uint8_t p = finger.getImage();
+  while (p != FINGERPRINT_OK && millis()<(tempoentrada+5000) && (Serial.available() == 0))
+    p = finger.getImage();
+
+  if(millis()>(tempoentrada+5000) || (Serial.available() > 0))
+    return -2;
+    
+  p = finger.image2Tz();
+  if (p != FINGERPRINT_OK)  return -1;
+
+  p = finger.fingerFastSearch();
+  if (p != FINGERPRINT_OK)  return -1;
+
+  return finger.fingerID;
 }
