@@ -78,12 +78,11 @@ void setup() {
   delay(100);
 
   do {
-    report("Esperando prof");
+    report(getString(2),0);
     leitura = digitalLida();
     if (!ehProfessor(leitura) && leitura != VAZIO) {
-      report("Digital invalida");
-      delay(700);
-      report("Esperando prof");
+      report(getString(3),700);
+      report(getString(2),0);
     }
     delay(100);
   } while (!ehProfessor(leitura));
@@ -92,7 +91,7 @@ void setup() {
 
 void loop() {
   delay(1000);
-  report("Esperando digital");
+  report(getString(4),0);
 
   // Se o programa do computador estiver comunicando execute suas instrucoes
 
@@ -104,7 +103,7 @@ void loop() {
   if (isAlpha(interrupChar)) {
     interrupcao(interrupChar);
     delay(1000);
-    report("Esperando digital");
+    report(getString(4),0);
   }
 
   // Se o programa nao estiver, continue com a rotina de ler digitais
@@ -125,7 +124,7 @@ void loop() {
       ;
     }
     else {
-      report("Problema ao ler digital");
+      report(getString(5),0);
     }
   }
 }
@@ -196,7 +195,7 @@ long ID2RA(int IDlido) {
 bool gravarPresenca(long leitura, String data, bool forcado) {
   //Insere o RA e a data da presenca no arquivo aberto
   if (jaCadastrado(leitura) and not(forcado)) {
-    report("Presenca ja cadastrada");
+    report(getString(6),0);
     return false;
   }
   else {
@@ -209,10 +208,10 @@ bool gravarPresenca(long leitura, String data, bool forcado) {
     }
     // Se nao conseguir abrir reporte
     else {
-      report(problemSD);
+      report(getString(7),0);
     }
 
-    report("Aluno " + String(leitura) + " presente!");
+    report("Aluno " + String(leitura) + " presente!",0);
   }
 }
 
@@ -242,8 +241,7 @@ void interrupcao(char interrup) {
       dumpFile(ARQUIVODEENTRADAS);
       break;
     case 'c':
-      report("Limpando dados");
-      delay(1000);
+      report(getString(8),1000);
 
       limpou = delFiles(lista, 2);
 
@@ -290,20 +288,18 @@ void interrupcao(char interrup) {
 void cadastro() {
   String RAnovo = "000000";
 
-  report("Novo Cadastro");
-
-  delay(1000);
+  report(getString(9),1000);
 
   for (int i = 0; i < 6; i++)
     RAnovo[i] = Serial.read();
 
   if (enroll(RAnovo) == true) {
-    report("RA " + RAnovo + " Cadastrado!");
+    report("RA " + RAnovo + " Cadastrado!",0);
     Serial.write("1");
     delay(1000);
   }
   else {
-    report("Problema ao cadastrar");
+    report(getString(10),0);
     Serial.write("0");
     delay(1000);
   }
@@ -319,7 +315,7 @@ bool enroll(String RA) {
     do{
       flag = !(getFingerprintEnroll());
       if(flag){
-        report("nao cadast");
+        report(getString(11),0);
       }
       delay(1000);
     }while(flag);
@@ -331,8 +327,7 @@ bool enroll(String RA) {
     
     return true;
   }
-  report("problem");
-  delay(2000);
+  report(getString(11),2000);
   return false;
 }
 
@@ -346,11 +341,11 @@ void dumpFile(String arquivo) {
       Serial.write(myFile.read());
     }
     myFile.close();
-    report("Transmitido");
+    report(getString(12),0);
   }
   // Se nao conseguir ler, reporte o erro e desligue:
   else {
-    report(problemSD);
+    report(getString(7),0);
     myFile.close(); 
     delay(2000);
     DESLIGAR;
@@ -370,18 +365,16 @@ void iniciarDia() {
   dataHj =  String(leitura) + ".03.2018"; //---------------------------------------FLAG RTC-----------
   if (RTC_ON)
     dataHj = rtc.getDateStr(FORMAT_SHORT);
-  report("Inicio");
-  delay(1000);
+  report(getString(13),1000);
 }
 
 void encerrarDia() {
-  report("Fim");
+  report(getString(14),1000);
   Serial.end();
-  delay(1000);
   DESLIGAR;
 }
 
-void report(String message) {
+void report(String message, int delaytime) {
   String linhas[2];
   quebra(message, linhas);
   lcd.clear();
@@ -389,6 +382,9 @@ void report(String message) {
   lcd.print(linhas[0]);
   lcd.setCursor(0, 1);
   lcd.print(linhas[1]);
+
+  delay(delaytime);
+
 }
 
 void inicializarPerifericos() {
@@ -407,8 +403,7 @@ void inicializarPerifericos() {
 
   //SD CARD setup
   if (!SD.begin(10)) {
-    report(problemSD);
-    delay(2000);
+    report(getString(7), 2000);
     DESLIGAR;
     return;
   }
@@ -430,8 +425,7 @@ void inicializarPerifericos() {
   //Biometric Sensor setup
   finger.begin(57600);
   if (finger.verifyPassword() == false) {
-    report("Error BioRead");
-    delay(2000);
+    report(getString(15),2000);
     DESLIGAR;
   }
 }
@@ -471,7 +465,7 @@ bool valido(long RA) {
 
 bool getFingerprintEnroll() {
 
-  report("Coloque o dedo");
+  report(getString(16),1000);
 
   int id = quantDeAlunos;
 
@@ -488,8 +482,8 @@ bool getFingerprintEnroll() {
       return false;
   }
 
-  report("retire o dedo");
-  delay(2000);
+  report(getString(17),2000);
+
   p = 0;
   while (p != FINGERPRINT_NOFINGER) {
     p = finger.getImage();
@@ -497,8 +491,7 @@ bool getFingerprintEnroll() {
   p = -1;
   
 
-  report("Coloque o dedo novamente");
-  delay(1000);
+  report(getString(18),1000);
 
   while (p != FINGERPRINT_OK) {
     p = finger.getImage();
@@ -515,7 +508,35 @@ bool getFingerprintEnroll() {
   p = finger.storeModel(id);
   if (p != FINGERPRINT_OK)    return false;
 
-  report("foi");
+  report(getString(19),1000);
+
   return true;
+
 }
 
+String getString(int ID) {
+  String resposta = "                                ";
+
+  myFile = SD.open("Strings.txt");
+  if (myFile) {
+    int i = 1;
+    bool flag = true;
+
+    while (flag and myFile.available()) {
+      char indice = myFile.read();
+      if (int(indice) == ID) {
+        for (i = 0; i < 32; i++)
+          resposta[i] = myFile.read();
+        flag = false;
+      } else {
+        for (i = 0; i < 33; i++)
+          myFile.read();
+      }
+    }
+
+    myFile.close();
+  }
+
+  return resposta;
+
+}
