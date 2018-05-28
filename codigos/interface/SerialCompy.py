@@ -37,6 +37,9 @@ def cadastrar(ser, RA):
     #ser.write(RA.encode('utf-8'))     # write a string
     leitura = "0"
     leitura = str(ser.read(1))[2]
+    while leitura != "1":
+        leitura = str(ser.read(1))[2]
+        print(leitura)
     print("Meu read foi: " + leitura)
     if(leitura == "1"):
         return "Cadastrou"

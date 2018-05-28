@@ -59,9 +59,9 @@ long professores[] = {0};
 String dataHj = "8.03.2018";
 long ultimoCadastrado;
 short int quantDeAlunos;
+bool sucesso;
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 DS1307 rtc(A4, A5);
-File myFile;
 SoftwareSerial mySerial(8, 9);
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 String lista[] = {ARQUIVODEALUNOS, ARQUIVODEENTRADAS};
@@ -78,11 +78,11 @@ void setup() {
   delay(100);
 
   do {
-    report(getString(2),0);
+    report(getString(2), 0);
     leitura = digitalLida();
     if (!ehProfessor(leitura) && leitura != VAZIO) {
-      report(getString(3),700);
-      report(getString(2),0);
+      report(getString(3), 700);
+      report(getString(2), 0);
     }
     delay(100);
   } while (!ehProfessor(leitura));
@@ -91,7 +91,7 @@ void setup() {
 
 void loop() {
   delay(1000);
-  report(getString(4),0);
+  report(getString(4), 0);
 
   // Se o programa do computador estiver comunicando execute suas instrucoes
 
@@ -103,7 +103,7 @@ void loop() {
   if (isAlpha(interrupChar)) {
     interrupcao(interrupChar);
     delay(1000);
-    report(getString(4),0);
+    report(getString(4), 0);
   }
 
   // Se o programa nao estiver, continue com a rotina de ler digitais
@@ -124,7 +124,7 @@ void loop() {
       ;
     }
     else {
-      report(getString(5),0);
+      report(getString(5), 0);
     }
   }
 }
@@ -142,6 +142,8 @@ long digitalLida() {
         flagNotOut = false;
       else {
         interrupcao(Serial.peek());
+        delay(2000);
+        report("",10);
       }
   }
 
@@ -166,52 +168,53 @@ long ID2RA(int IDlido) {
   int IDref;
 
   //Tenta ler a lista de alunos
-  myFile = SD.open(ARQUIVODEALUNOS);
+  File arqID2RA = SD.open(ARQUIVODEALUNOS);
 
   // Se o arquivo estiver nao estiver legivel, retorne um RA Invalido (-1):
-  if (myFile) {
-    while (myFile.available()) {
+  if (arqID2RA) {
+    while (arqID2RA.available()) {
       //Le o RA
       RA = 0;
       for (int i = 0; i < 6; i++) {
-        li = myFile.read() - '0';
+        li = arqID2RA.read() - '0';
         RA = RA * 10 +  li;
       }
-      IDref = myFile.read();
+      IDref = arqID2RA.read();
 
       // Se o ID for o certo retorne esse RA
       if (IDref == IDlido) {
-        myFile.close();
+        arqID2RA.close();
         return RA;
       }
     }
   }
   // Se o arquivo estiver nao estiver legivel ou o ID não existir, retorne um RA Invalido (-1):
 
-  myFile.close();
+  if(arqID2RA)
+    arqID2RA.close();
   return -1;
 }
 
 bool gravarPresenca(long leitura, String data, bool forcado) {
   //Insere o RA e a data da presenca no arquivo aberto
   if (jaCadastrado(leitura) and not(forcado)) {
-    report(getString(6),0);
+    report(getString(6), 0);
     return false;
   }
   else {
     // Salva a presenca no cartao
-    myFile = SD.open(ARQUIVODEENTRADAS, FILE_WRITE);
+    File arqPresenca = SD.open(ARQUIVODEENTRADAS, FILE_WRITE);
     // Se conseguir abrir, salve
-    if (myFile) {
-      myFile.println(String(leitura) + "," + data);
-      myFile.close();
+    if (arqPresenca) {
+      arqPresenca.println(String(leitura) + "," + data);
+      arqPresenca.close();
     }
     // Se nao conseguir abrir reporte
     else {
-      report(getString(7),0);
+      report(getString(7), 0);
     }
 
-    report("Aluno " + String(leitura) + " presente!",0);
+    report("Aluno " + String(leitura) + " presente!", 0);
   }
 }
 
@@ -241,7 +244,7 @@ void interrupcao(char interrup) {
       dumpFile(ARQUIVODEENTRADAS);
       break;
     case 'c':
-      report(getString(8),1000);
+      report(getString(8), 1000);
 
       limpou = delFiles(lista, 2);
 
@@ -288,18 +291,18 @@ void interrupcao(char interrup) {
 void cadastro() {
   String RAnovo = "000000";
 
-  report(getString(9),1000);
+  report(getString(9), 1000);
 
   for (int i = 0; i < 6; i++)
     RAnovo[i] = Serial.read();
 
   if (enroll(RAnovo) == true) {
-    report("RA " + RAnovo + " Cadastrado!",0);
+    report("RA " + RAnovo + " Cadastrado!", 0);
     Serial.write("1");
     delay(1000);
   }
   else {
-    report(getString(10),0);
+    report(getString(10), 0);
     Serial.write("0");
     delay(1000);
   }
@@ -308,45 +311,39 @@ void cadastro() {
 
 bool enroll(String RA) {
   bool flag = true;
-  myFile = SD.open(ARQUIVODEALUNOS, FILE_WRITE);
+  File arqEnroll = SD.open(ARQUIVODEALUNOS, FILE_WRITE);
   // Se conseguir abrir, salve
-  if (myFile) {
+  if (arqEnroll) {
 
-    do{
-      flag = !(getFingerprintEnroll());
-      if(flag){
-        report(getString(11),0);
-      }
-      delay(1000);
-    }while(flag);
-    
+    sucesso = false;
+    while (sucesso == false)
+      while (!  getFingerprintEnroll(quantDeAlunos+1) );
+
     quantDeAlunos++;
-    myFile.print(RA);
-    myFile.print(char(quantDeAlunos));
-    myFile.close();
-    
+    arqEnroll.print(RA);
+    arqEnroll.print(char(quantDeAlunos));
+    arqEnroll.close();
     return true;
   }
-  report(getString(11),2000);
+  report(getString(11), 2000);
   return false;
 }
 
 void dumpFile(String arquivo) {
-  myFile = SD.open(arquivo);
+  File arqDump = SD.open(arquivo);
 
   Serial.println(arquivo);
   // Se o arquivo estiver legivel, copie:
-  if (myFile) {
-    while (myFile.available()) {
-      Serial.write(myFile.read());
+  if (arqDump) {
+    while (arqDump.available()) {
+      Serial.write(arqDump.read());
     }
-    myFile.close();
-    report(getString(12),0);
+    arqDump.close();
+    report(getString(12), 0);
   }
   // Se nao conseguir ler, reporte o erro e desligue:
   else {
-    report(getString(7),0);
-    myFile.close(); 
+    report(getString(7), 0);
     delay(2000);
     DESLIGAR;
   }
@@ -365,11 +362,11 @@ void iniciarDia() {
   dataHj =  String(leitura) + ".03.2018"; //---------------------------------------FLAG RTC-----------
   if (RTC_ON)
     dataHj = rtc.getDateStr(FORMAT_SHORT);
-  report(getString(13),1000);
+  report(getString(13), 1000);
 }
 
 void encerrarDia() {
-  report(getString(14),1000);
+  report(getString(14), 1000);
   Serial.end();
   DESLIGAR;
 }
@@ -408,24 +405,24 @@ void inicializarPerifericos() {
     return;
   }
   else {
-    myFile = SD.open(ARQUIVODEALUNOS);
+    File arqInicia = SD.open(ARQUIVODEALUNOS);
 
     // Se o arquivo estiver legivel, veja quantos alunos tem:
-    if (myFile) {
-      while (myFile.available()) {
-        quantDeAlunos = int(myFile.read());
+    if (arqInicia) {
+      while (arqInicia.available()) {
+        quantDeAlunos = int(arqInicia.read());
       }
+      arqInicia.close();
     }
     else {
       quantDeAlunos = 0;
     }
-    myFile.close();
   }
 
   //Biometric Sensor setup
   finger.begin(57600);
   if (finger.verifyPassword() == false) {
-    report(getString(15),2000);
+    report(getString(15), 2000);
     DESLIGAR;
   }
 }
@@ -463,13 +460,12 @@ bool valido(long RA) {
   return true;
 }
 
-bool getFingerprintEnroll() {
 
-  report(getString(16),1000);
-
-  int id = quantDeAlunos;
-
+uint8_t getFingerprintEnroll(int id) {
+  sucesso = false;
   int p = -1;
+
+  report(getString(16), 0);
 
   while (p != FINGERPRINT_OK) {
     p = finger.getImage();
@@ -479,62 +475,68 @@ bool getFingerprintEnroll() {
 
   p = finger.image2Tz(1);
   if (p != FINGERPRINT_OK) {
-      return false;
+    return p;
   }
 
-  report(getString(17),2000);
 
+
+  report(getString(17), 2000);
   p = 0;
   while (p != FINGERPRINT_NOFINGER) {
     p = finger.getImage();
   }
+
   p = -1;
-  
-
-  report(getString(18),1000);
-
-  while (p != FINGERPRINT_OK) {
+  report(getString(18), 0);
+  while (p != FINGERPRINT_OK)
     p = finger.getImage();
-  }
 
   // OK success!
 
   p = finger.image2Tz(2);
-  if(p != FINGERPRINT_OK);    return false;
-  
+
+  if (p != FINGERPRINT_OK) {
+    return p;
+  }
+
+  // OK converted!
+
   p = finger.createModel();
-  if (p != FINGERPRINT_OK)    return false;
-  
+  if (p != FINGERPRINT_OK) {
+    return p;
+  }
+
   p = finger.storeModel(id);
-  if (p != FINGERPRINT_OK)    return false;
-
-  report(getString(19),1000);
-
-  return true;
-
+  if (p == FINGERPRINT_OK) {
+    report(getString(19), 0);
+    sucesso = true;
+    delay(10);
+  }  else {
+    return p;
+  }
 }
 
 String getString(int ID) {
   String resposta = "                                ";
 
-  myFile = SD.open("Strings.txt");
-  if (myFile) {
+  File arqgetString = SD.open("Strings.txt");
+  if (arqgetString) {
     int i = 1;
     bool flag = true;
 
-    while (flag and myFile.available()) {
-      char indice = myFile.read();
+    while (flag and arqgetString.available()) {
+      char indice = arqgetString.read();
       if (int(indice) == ID) {
         for (i = 0; i < 32; i++)
-          resposta[i] = myFile.read();
+          resposta[i] = arqgetString.read();
         flag = false;
       } else {
         for (i = 0; i < 33; i++)
-          myFile.read();
+          arqgetString.read();
       }
     }
 
-    myFile.close();
+    arqgetString.close();
   }
 
   return resposta;
