@@ -11,6 +11,7 @@ def gerar(plansaida, entradas):
 
 
         for linha in arqCsv:
+            print (linha)
             if(len(linha) == 0):
                 return False
             diaMes = linha[1].split(',')

@@ -1,7 +1,7 @@
 /*
 
    Desenvolvido por Bruno Oliveira - bruno97br@gmail.com
-    Ultimo update - 12/04/2018
+    Ultimo update - 29/05/2018
 
    Infos:
         RTC:
@@ -336,7 +336,6 @@ bool enroll(String RA) {
 void dumpFile(String arquivo) {
   File arqDump = SD.open(arquivo);
 
-  Serial.println(arquivo);
   // Se o arquivo estiver legivel, copie:
   if (arqDump) {
     while (arqDump.available()) {
