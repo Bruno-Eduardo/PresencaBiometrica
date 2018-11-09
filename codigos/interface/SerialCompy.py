@@ -25,10 +25,16 @@ def conectar():
                 print("Conectado ao " + ser.name)         # check which port was really used
                 return ser
             except:
-                ser = serial.Serial("/dev/" + serial.tools.list_ports.comports()[0].name,9600,timeout=2)
-                time.sleep(2)
-                print("Conectado ao " + ser.name)         # check which port was really used
-                return ser
+                try:
+                    ser = serial.Serial('COM4',9600,timeout=2)  # open serial port
+                    time.sleep(2)
+                    print("Conectado ao " + ser.name)         # check which port was really used
+                    return ser
+                except:
+                    ser = serial.Serial("/dev/" + serial.tools.list_ports.comports()[0].name,9600,timeout=2)
+                    time.sleep(2)
+                    print("Conectado ao " + ser.name)         # check which port was really used
+                    return ser
 
 def cadastrar(ser, RA):
     ser.write("a".encode('utf-8'))
@@ -59,7 +65,7 @@ def buscaPlanilha(ser):
     tam = len(textoSeparado)
     for i in range(0,tam):
         if(i < tam-1):
-            file.write(textoSeparado[i] + '\r\n')
+            file.write(textoSeparado[i] + '\r')
         else:
             file.write(textoSeparado[i])
         i += 1

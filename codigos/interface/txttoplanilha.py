@@ -5,6 +5,7 @@ import csv
 def gerar(plansaida, entradas):
     presencas = []
 
+	
     #Ler o input
     with open(entradas) as arq:
         arqCsv = csv.reader(arq)
@@ -13,12 +14,15 @@ def gerar(plansaida, entradas):
         for linha in arqCsv:
             print (linha)
             if(len(linha) == 0):
+                print('quitei')
                 return False
             diaMes = linha[1].split(',')
             diaMes = diaMes[0].split('.')
             aluno = [linha[0].split(',')[0], diaMes[0], diaMes[1]]
             presencas.append(aluno)
+
     #Ler os dados antigos
+
     '''
     try:
         with open('planilha_de_presencas.csv') as arq:

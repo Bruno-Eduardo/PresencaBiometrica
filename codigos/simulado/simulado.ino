@@ -75,6 +75,7 @@ void setup() {
   long leitura;
 
   inicializarPerifericos();
+  dataHj = rtc.getDateStr(FORMAT_SHORT);
   delay(100);
 
   do {
@@ -294,7 +295,8 @@ void interrupcao(char interrup) {
 
 void cadastro() {
   String RAnovo = "000000";
-
+  long aluno;
+  
   report(getString(9), 1000);
 
   for (int i = 0; i < 6; i++)
@@ -304,6 +306,14 @@ void cadastro() {
     report("RA " + RAnovo + " Cadastrado!", 0);
     Serial.write("1");
     delay(1000);
+    if(RAnovo != "000000"){
+      aluno = 0;
+      for (int i = 0; i < 6; i++) {
+        aluno = aluno * 10 + int(RAnovo[i] - '0');
+      }
+      gravarPresenca(aluno, dataHj, true);
+      delay(1000);
+    }
   }
   else {
     report(getString(10), 0);
