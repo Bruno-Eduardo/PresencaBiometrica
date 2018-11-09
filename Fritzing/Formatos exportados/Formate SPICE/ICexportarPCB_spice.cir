@@ -1,0 +1,5 @@
+ICexportarPCB
+
+.TRAN 1ms 100ms
+* .AC DEC 100 100 1MEG
+.END

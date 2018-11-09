@@ -87,7 +87,11 @@ class Janela:
                 def callback():
                     plan.destroy()
                 def abrirPlanilha():
-                    os.system("libreoffice planilha_de_presenca.csv")
+                    try:
+                        os.system("xdg-open planilha_de_presenca.csv")
+                    except:
+                        os.system("start planilha_de_presenca.csv")
+
                     print("aqui abre a planilha!")
                     plan.destroy()
 

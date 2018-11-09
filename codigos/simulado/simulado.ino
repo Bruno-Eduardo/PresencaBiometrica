@@ -44,7 +44,7 @@
 #include <Adafruit_Fingerprint.h>
 #include <SoftwareSerial.h>
 
-#define RTC_ON false
+#define RTC_ON true
 #define DESLIGAR asm volatile ("  jmp 0")
 #define ARQUIVODEENTRADAS "ENTRADAS.CSV"
 #define ARQUIVODEALUNOS "ALUNOS.TXT"
@@ -363,10 +363,7 @@ bool delFiles(String lista[], int sizeList) {
 }
 
 void iniciarDia() {
-  int leitura = analogRead(A0) % 31;
-  dataHj =  String(leitura) + ".03.2018"; //---------------------------------------FLAG RTC-----------
-  if (RTC_ON)
-    dataHj = rtc.getDateStr(FORMAT_SHORT);
+  dataHj = rtc.getDateStr(FORMAT_SHORT);
   report(getString(13), 1000);
 }
 

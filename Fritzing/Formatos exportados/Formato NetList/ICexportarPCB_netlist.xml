@@ -1,0 +1,1026 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<netlist date="qui ago 16 12:00:10 2018" sketch="ICexportarPCB.fzz">
+ <net>
+  <connector name="V-" id="connector1">
+   <part title="BC9VPC" label="BAT1" id="854184252"/>
+  </connector>
+  <connector name="V-" id="connector1">
+   <part title="BC9VPC" label="BAT1" id="854184250"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper11" id="854310623"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper11" id="854310620"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper11" id="854310623"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper11" id="854310620"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper6" id="854302343"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper6" id="854302340"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper6" id="854302343"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper6" id="854302340"/>
+  </connector>
+  <connector name="1" id="connector0">
+   <part title="Header 4" label="JP1" id="854219362"/>
+  </connector>
+  <connector name="1" id="connector0">
+   <part title="Header 4" label="JP1" id="854219360"/>
+  </connector>
+  <connector name="GND" id="connector8">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105792"/>
+  </connector>
+  <connector name="GND" id="connector8">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105790"/>
+  </connector>
+  <connector name="Pin 1" id="connector1">
+   <part title="220Ω Resistor" label="R1" id="854257760"/>
+  </connector>
+  <connector name="LED-" id="connector15">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="LED-" id="connector15">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+  <connector name="Data-signal" id="connector9">
+   <part title="Humidity and Temperature Sensor RHT03" label="Leitor biometrico" id="854104992"/>
+  </connector>
+  <connector name="Data-signal" id="connector9">
+   <part title="Humidity and Temperature Sensor RHT03" label="Leitor biometrico" id="854104990"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper8" id="854306243"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper8" id="854306240"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper8" id="854306243"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper8" id="854306240"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper7" id="854305673"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper7" id="854305670"/>
+  </connector>
+  <connector name="GND" id="connector88">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="GND" id="connector88">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper7" id="854305673"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper7" id="854305670"/>
+  </connector>
+  <connector name="GND" id="connector57">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="GND" id="connector57">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="GND" id="connector89">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="GND" id="connector89">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper9" id="854306753"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper9" id="854306750"/>
+  </connector>
+  <connector name="VSS" id="connector0">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="VSS" id="connector0">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper9" id="854306753"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper9" id="854306750"/>
+  </connector>
+  <connector name="R/W" id="connector4">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="R/W" id="connector4">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="Vcc" id="connector8">
+   <part title="Humidity and Temperature Sensor RHT03" label="Leitor biometrico" id="854104992"/>
+  </connector>
+  <connector name="Vcc" id="connector8">
+   <part title="Humidity and Temperature Sensor RHT03" label="Leitor biometrico" id="854104990"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper4" id="854301573"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper4" id="854301570"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper4" id="854301573"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper4" id="854301570"/>
+  </connector>
+  <connector name="Pin 1" id="connector1">
+   <part title="220Ω Resistor" label="R2" id="854257740"/>
+  </connector>
+  <connector name="Pin 1" id="connector1">
+   <part title="220Ω Resistor" label="R3" id="854257720"/>
+  </connector>
+  <connector name="VCC" id="connector9">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105790"/>
+  </connector>
+  <connector name="VCC" id="connector9">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105792"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper2" id="854289863"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper2" id="854289860"/>
+  </connector>
+  <connector name="VDD" id="connector1">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="VDD" id="connector1">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper2" id="854289863"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper2" id="854289860"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper1" id="854289043"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper1" id="854289040"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper3" id="854295453"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper3" id="854295450"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper1" id="854289043"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper1" id="854289040"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper3" id="854295453"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper3" id="854295450"/>
+  </connector>
+  <connector name="2" id="connector1">
+   <part title="Header 4" label="JP1" id="854219362"/>
+  </connector>
+  <connector name="2" id="connector1">
+   <part title="Header 4" label="JP1" id="854219360"/>
+  </connector>
+  <connector name="5V" id="connector87">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="5V" id="connector87">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D7" id="connector68">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D7" id="connector68">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper5" id="854302163"/>
+  </connector>
+  <connector name="jumperConnector0" id="connector0">
+   <part title="Jumper" label="Jumper5" id="854302160"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper5" id="854302163"/>
+  </connector>
+  <connector name="jumperConnector1" id="connector1">
+   <part title="Jumper" label="Jumper5" id="854302160"/>
+  </connector>
+  <connector name="RS" id="connector3">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="RS" id="connector3">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="3" id="connector2">
+   <part title="Header 4" label="JP1" id="854219362"/>
+  </connector>
+  <connector name="3" id="connector2">
+   <part title="Header 4" label="JP1" id="854219360"/>
+  </connector>
+  <connector name="A4/SDA" id="connector4">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="A4/SDA" id="connector4">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="A4/SDA" id="connector59">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="A4/SDA" id="connector59">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="VIN" id="connector90">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="VIN" id="connector90">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="V+" id="connector0">
+   <part title="BC9VPC" label="BAT1" id="854184252"/>
+  </connector>
+  <connector name="V+" id="connector0">
+   <part title="BC9VPC" label="BAT1" id="854184250"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D2" id="connector63">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D2" id="connector63">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="DB7" id="connector13">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="DB7" id="connector13">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="LED+" id="connector14">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="LED+" id="connector14">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+  <connector name="Pin 0" id="connector0">
+   <part title="220Ω Resistor" label="R3" id="854257720"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="MISO" id="connector10">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105792"/>
+  </connector>
+  <connector name="MISO" id="connector10">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105790"/>
+  </connector>
+  <connector name="D11 PWM/MOSI" id="connector54">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D11 PWM/MOSI" id="connector54">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D10 PWM/SS" id="connector53">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D10 PWM/SS" id="connector53">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="CS" id="connector13">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105792"/>
+  </connector>
+  <connector name="CS" id="connector13">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105790"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="DB5" id="connector11">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="DB5" id="connector11">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+  <connector name="D4" id="connector65">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D4" id="connector65">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="DB4" id="connector10">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="DB4" id="connector10">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+  <connector name="D5 PWM" id="connector66">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D5 PWM" id="connector66">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="SCK" id="connector12">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105792"/>
+  </connector>
+  <connector name="SCK" id="connector12">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105790"/>
+  </connector>
+  <connector name="D13/SCK" id="connector56">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D13/SCK" id="connector56">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D8" id="connector51">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D8" id="connector51">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="GND 1" id="connector10">
+   <part title="Humidity and Temperature Sensor RHT03" label="Leitor biometrico" id="854104992"/>
+  </connector>
+  <connector name="GND 1" id="connector10">
+   <part title="Humidity and Temperature Sensor RHT03" label="Leitor biometrico" id="854104990"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D9 PWM" id="connector52">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D9 PWM" id="connector52">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="GND 2" id="connector11">
+   <part title="Humidity and Temperature Sensor RHT03" label="Leitor biometrico" id="854104992"/>
+  </connector>
+  <connector name="GND 2" id="connector11">
+   <part title="Humidity and Temperature Sensor RHT03" label="Leitor biometrico" id="854104990"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="Pin 0" id="connector0">
+   <part title="220Ω Resistor" label="R1" id="854257760"/>
+  </connector>
+  <connector name="Pin 0" id="connector0">
+   <part title="220Ω Resistor" label="R2" id="854257740"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D12/MISO" id="connector55">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D12/MISO" id="connector55">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="MOSI" id="connector11">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105790"/>
+  </connector>
+  <connector name="MOSI" id="connector11">
+   <part title="MicroSD Card Module" label="Leitor SD" id="854105792"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="A5/SCL" id="connector5">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="A5/SCL" id="connector5">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="A5/SCL" id="connector60">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="A5/SCL" id="connector60">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="4" id="connector3">
+   <part title="Header 4" label="JP1" id="854219362"/>
+  </connector>
+  <connector name="4" id="connector3">
+   <part title="Header 4" label="JP1" id="854219360"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D3 PWM" id="connector64">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D3 PWM" id="connector64">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+  <connector name="DB6" id="connector12">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="DB6" id="connector12">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="E" id="connector5">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="E" id="connector5">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+  <connector name="D6 PWM" id="connector67">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D6 PWM" id="connector67">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="V0" id="connector2">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="V0" id="connector2">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="DB3" id="connector9">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="DB3" id="connector9">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="DB1" id="connector7">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="DB1" id="connector7">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="DB0" id="connector6">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="DB0" id="connector6">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="DB2" id="connector8">
+   <part title="LCD screen" label="LCD1" id="60572"/>
+  </connector>
+  <connector name="DB2" id="connector8">
+   <part title="LCD screen" label="LCD1" id="60570"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D0/RX" id="connector61">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D0/RX" id="connector61">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="ioref" id="connector84">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="ioref" id="connector84">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="RESET" id="connector85">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="RESET" id="connector85">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="A0" id="connector0">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="A0" id="connector0">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="N/C" id="connector91">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="N/C" id="connector91">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="A1" id="connector1">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="A1" id="connector1">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="A2" id="connector2">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="A2" id="connector2">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="3V3" id="connector86">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="3V3" id="connector86">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="D1/TX" id="connector62">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="D1/TX" id="connector62">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="AREF" id="connector58">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="AREF" id="connector58">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="A3" id="connector3">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59952"/>
+  </connector>
+  <connector name="A3" id="connector3">
+   <part title="Arduino Uno (Rev3)" label="Componente1" id="59950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill28" id="854386860"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill27" id="854386850"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill26" id="854386840"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill25" id="854386830"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill24" id="854386820"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill23" id="854386810"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill22" id="854386800"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill21" id="854386790"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill20" id="854386780"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill19" id="854386770"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill18" id="854386760"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill17" id="854386750"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill16" id="854386740"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill15" id="854386730"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill14" id="854386720"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill13" id="854386710"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill12" id="854386700"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill11" id="854386690"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill10" id="854386680"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill9" id="854386670"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill8" id="854386660"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill7" id="854386650"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill6" id="854386640"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill5" id="854386630"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill4" id="854386620"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill3" id="854386610"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill2" id="854386600"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill1" id="854386590"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill86" id="854387440"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill85" id="854387430"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill84" id="854387420"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill83" id="854387410"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill82" id="854387400"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill81" id="854387390"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill80" id="854387380"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill79" id="854387370"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill78" id="854387360"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill77" id="854387350"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill76" id="854387340"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill75" id="854387330"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill74" id="854387320"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill73" id="854387310"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill72" id="854387300"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill71" id="854387290"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill70" id="854387280"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill69" id="854387270"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill68" id="854387260"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill67" id="854387250"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill66" id="854387240"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill65" id="854387230"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill64" id="854387220"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill63" id="854387210"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill62" id="854387200"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill61" id="854387190"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill60" id="854387180"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill59" id="854387170"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill58" id="854387160"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill57" id="854387150"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill56" id="854387140"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill55" id="854387130"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill54" id="854387120"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill53" id="854387110"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill52" id="854387100"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill51" id="854387090"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill50" id="854387080"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill49" id="854387070"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill48" id="854387060"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill47" id="854387050"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill46" id="854387040"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill45" id="854387030"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill44" id="854387020"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill43" id="854387010"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill42" id="854387000"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill41" id="854386990"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill40" id="854386980"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill39" id="854386970"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill38" id="854386960"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill37" id="854386950"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill36" id="854386940"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill35" id="854386930"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill34" id="854386920"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill33" id="854386910"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill32" id="854386900"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill31" id="854386890"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill30" id="854386880"/>
+  </connector>
+ </net>
+ <net>
+  <connector name="connector0" id="connector0">
+   <part title="Copper Fill" label="Copper Fill29" id="854386870"/>
+  </connector>
+ </net>
+</netlist>
